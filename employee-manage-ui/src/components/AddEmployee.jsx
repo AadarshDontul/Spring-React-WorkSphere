@@ -26,7 +26,7 @@ const AddEmployee = () => {
           />
         </div>
 
-        {/* Email */}
+        {/* Email of Employee*/}
         <div className="flex items-center justify-between w-full my-4 ">
           <label className="text-xl text-white w-1/3">Email</label>
           <input
