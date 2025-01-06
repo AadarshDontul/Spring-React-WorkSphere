@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/employee")
 public class EmployeeController {
 
     //constructor based Injection
@@ -18,7 +18,7 @@ public class EmployeeController {
             this.employeeService = employeeService;
     }
 
-    @PostMapping("/employee/add")
+    @PostMapping("/add")
     public Employee createEmployee(@RequestBody Employee employee){
         return employeeService.createEmployee(employee);
     }
