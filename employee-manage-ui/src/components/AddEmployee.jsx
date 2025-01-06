@@ -34,6 +34,14 @@ const AddEmployee = () => {
             className="border rounded px-4 py-2 w-2/3 text-black bg-gray-200"
           />
         </div>
+        <div className="flex items-center justify-center w-full my-4 space-x-3 ">
+          <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            Save
+          </button>
+          <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Clear
+          </button>
+        </div>
       </div>
     </div>
   );
