@@ -6,6 +6,10 @@ import com.dontul.Employee.repository.EmployeeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -25,5 +29,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employeeRepository.save(employeeEntity);
         return employee;
+    }
+
+    @Override
+    public List<Employee> getAllEmployee() {
+        List<EmployeeEntity> employeeEntities = employeeRepository.findAll();
+
+        return employeeEntities
+                .stream()
+                .map(employee -> new Employee(
+                        employee.getFirstName(),
+                        employee.getLastName(),
+                        employee.getEmail()))
+                .toList();
     }
 }
