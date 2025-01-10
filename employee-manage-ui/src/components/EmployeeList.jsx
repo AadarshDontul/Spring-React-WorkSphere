@@ -1,11 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import EmployeeService from '../services/EmployeeService';
 
 const EmployeeList = () => {
+
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(true);
+  const [employee, setEmployee] = useState(null);
+
+  // Fetch Employee Data
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await EmployeeService.getEmployee();
+        setEmployee(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+      setLoading(false);
+    };
+    fetchData();
+  }, [])
+  
+
   return (
+
     <div className="container mx-auto mt-5 bg-gray-900 text-white p-5 rounded-lg shadow-lg">
       {/* Button Section */}
       <div className="h-12 flex justify-start mx-8">
-        <button className="bg-white hover:bg-white text-black rounded font-semibold px-4 py-2 transition duration-200 ease-in-out">
+        <button 
+        onClick={()=>navigate("/addEmployee")}
+        className="bg-white hover:bg-white text-black rounded font-semibold px-4 py-2 transition duration-200 ease-in-out">
           Add Employee
         </button>
       </div>
