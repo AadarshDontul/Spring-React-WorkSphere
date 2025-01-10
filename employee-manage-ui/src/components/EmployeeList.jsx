@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EmployeeService from '../services/EmployeeService';
+import Employee from './Employee';
 
 const EmployeeList = () => {
 
@@ -8,6 +9,7 @@ const EmployeeList = () => {
 
   const [loading, setLoading] = useState(true);
   const [employee, setEmployee] = useState(null);
+
 
   // Fetch Employee Data
   useEffect(() => {
@@ -48,23 +50,14 @@ const EmployeeList = () => {
               <th className="px-4 py-2 border border-gray-700">Actions</th>
             </tr>
           </thead>
+          {!loading && (
           <tbody>
             {/* Example Row */}
-            <tr className="bg-gray-800 hover:bg-gray-700">
-              <td className="px-4 py-2 border border-gray-700 text-center">John</td>
-              <td className="px-4 py-2 border border-gray-700 text-center">Doe</td>
-              <td className="px-4 py-2 border border-gray-700 text-center">john.doe@example.com</td>
-              <td className="px-4 py-2 border border-gray-700 text-center">
-                <button className="bg-blue-500 hover:bg-blue-600 text-white rounded px-3 py-1 text-sm">
-                  Edit
-                </button>
-                <button className="bg-red-500 hover:bg-red-600 text-white rounded px-3 py-1 text-sm ml-2">
-                  Delete
-                </button>
-              </td>
-            </tr>
+            {employee.map((emp)=>(
+              <Employee emp={emp} />
+            ))}
             {/* Add more rows here */}
-          </tbody>
+          </tbody>)}
         </table>
       </div>
     </div>
