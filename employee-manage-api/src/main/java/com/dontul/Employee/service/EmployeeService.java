@@ -9,4 +9,8 @@ public interface EmployeeService {
     Employee createEmployee(Employee employee);
 
     List<Employee> getAllEmployee();
+
+    boolean deleteEmployee(Long id);
+
+    Employee getEmployeeById(Long id);
 }

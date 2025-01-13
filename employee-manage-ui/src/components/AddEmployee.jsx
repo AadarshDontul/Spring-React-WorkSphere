@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import EmployeeService from "../services/EmployeeService";
+import { useNavigate } from "react-router-dom";
 
 const AddEmployee = () => {
 
@@ -17,17 +18,20 @@ const AddEmployee = () => {
     setEmployee({...employee, [e.target.name]: value})
   }
 
+  const navigate = useNavigate();
+
   const saveEmployee = (e) => {
     e.preventDefault();
     EmployeeService.createEmployee(employee)
-    .then((res)=>{
-      console.log(res);
-    })
-    .catch((err)=>{
-      console.log(err);
-    })
-    
-  }
+      .then((res) => {
+        console.log("Employee created successfully:", res);
+        navigate("/employeeList"); 
+      })
+      .catch((err) => {
+        console.error("Error creating employee:", err);
+      });
+  };
+  
 
   return (
     <div className="flex justify-center py-12">

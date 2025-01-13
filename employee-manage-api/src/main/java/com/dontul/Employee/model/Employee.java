@@ -5,9 +5,11 @@ public class Employee {
     public Employee() {
     }
 
+    private long id;
     private String firstName;
 
-    public Employee(String firstName, String lastName, String email) {
+    public Employee(long id,String firstName, String lastName, String email) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -35,6 +37,14 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id){
+        this.id = id;
     }
 
     private String lastName;
