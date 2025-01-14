@@ -1,52 +1,64 @@
-import React, { useState } from "react";
-import EmployeeService from "../services/EmployeeService";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import EmployeeService from '../services/EmployeeService'
 
-const AddEmployee = () => {
-
-  const [employee, setEmployee] = useState(
-    {
-      id:"",
-      firstName: "",
-      lastName: "",
-      email: ""
-    }
-  )
-
-  const clearForm = () => {
-    setEmployee({
-      id: "",
-      firstName: "",
-      lastName: "",
-      email: ""
-    });
-  };
-
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setEmployee({...employee, [e.target.name]: value})
-  }
+const UpdateEmployee = () => {
 
   const navigate = useNavigate();
 
-  const saveEmployee = (e) => {
+  const updateEmployee = (e) => {
     e.preventDefault();
-    EmployeeService.createEmployee(employee)
-      .then((res) => {
-        console.log("Employee created successfully:", res);
-        navigate("/employeeList"); 
-      })
-      .catch((err) => {
-        console.error("Error creating employee:", err);
-      });
-  };
+    EmployeeService.updateEmployee(employee,employee.id).then((res)=>{
+      console.log("Employee updated successfully:", res);
+    }).catch((err)=>{
+      console.error("Error updating employee:", err);
+    });
+    navigate("/employeeList");
+    alert("Employee updated successfully");
+  }
+
+  const { id } = useParams();
+  console.log("ID from params:", id);
+
+  const [employee, setEmployee] = useState({
+    id: id,
+    firstName: "",
+    lastName: "",
+    email: ""
+  });
+
+  const handleChange = (e) => {
+    setEmployee({
+      ...employee,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await EmployeeService.getEmployeeById(id);
+        setEmployee(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchData();
+  }, [] )
+
+  const cancelUpdate = (e) => {
+    e.preventDefault();
+    navigate("/employeeList");
+  }
   
 
   return (
     <div className="flex justify-center py-12">
       <div className="flex flex-col max-w-2xl px-8 py-8 bg-gray-800 rounded-lg shadow-lg border border-gray-700 ">
         <div className="text-2xl mb-4">
-          <h1 className="font-semibold text-white">Add New Employee</h1>
+          <h1 className="font-semibold text-white">Update Employee</h1>
         </div>
 
         {/* First Name */}
@@ -87,19 +99,19 @@ const AddEmployee = () => {
 
         {/* Save and Clear Button */}
         <div className="flex items-center justify-center w-full my-4 space-x-3 ">
-          <button onClick={saveEmployee} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-            Save
+          <button onClick={updateEmployee} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            Update
           </button>
-          <button 
-          onClick={clearForm}
+          <button
+          onClick={(e)=> cancelUpdate(e) }
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-            Clear
+            Cancel
           </button>
 
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AddEmployee;
+export default UpdateEmployee

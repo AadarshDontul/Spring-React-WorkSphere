@@ -13,7 +13,24 @@ class EmployeeService {
     }
 
     deleteEmployee(id){
-        return axios.delete(`${EMPLOYEE_API_BASE_URL}/${id}`)
+        return axios.delete(`${EMPLOYEE_API_BASE_URL}/${id}`);
+    }
+
+    async getEmployeeById(id) {
+        try {
+            console.log(`Fetching employee with ID: ${id}`);
+            const response = await axios.get(`${EMPLOYEE_API_BASE_URL}/${id}`);
+            console.log('Response:', response);
+            return response;
+        } catch (error) {
+            console.log('Full error:', error);
+            console.log('Response data:', error.response?.data);
+            throw error;
+        }
+    }
+
+    updateEmployee(employee, id){
+        return axios.put(`${EMPLOYEE_API_BASE_URL}/${id}`,employee);
     }
 
 }
